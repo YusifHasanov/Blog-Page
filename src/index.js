@@ -1,14 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './root/App';
 import reportWebVitals from './reportWebVitals';
-
+import {BrowserRouter} from "react-router-dom";
+import {Provider} from "react-redux";
+import store from "./app/Store";
+import {ChakraProvider} from "@chakra-ui/react";
+import 'react-toastify/dist/ReactToastify.css';
+import {extendedUserSlice} from "./features/redux/slices/UserSlice";
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+store.dispatch(extendedUserSlice.endpoints.getUsers.initiate())
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <BrowserRouter>
+        <ChakraProvider>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </ChakraProvider>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
